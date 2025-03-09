@@ -1,26 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'dart:math';
+import 'dart:math'; 
+import 'package:flutter/services.dart';
 class GenerateController extends GetxController { 
 
   RxDouble numberCount = 1.0.obs;
+  RxInt allowDuplicateNumber = 0.obs;
+
   final minMumNumber = TextEditingController(text: "0");
   final maxiMumNumber = TextEditingController(text: "100");  
   final items = <String>[].obs;
   RxInt columnResult = 1.obs;  
-
+  final item_histories = <String>[].obs;
   void slider(value){
     numberCount.value = value;
   }
-
-  void generate(numberCount) {     
+  void currentIndex(index){
+    allowDuplicateNumber.value = index; 
+  }
+  void generate(numberCount,allowDuplicate) {
     if(validateInputNumber(minMumNumber.text,maxiMumNumber.text)){ 
-      generateNumber(minMumNumber.text,maxiMumNumber.text,numberCount); 
+      generateNumber(minMumNumber.text,maxiMumNumber.text,numberCount,allowDuplicate); 
     }
+
   } 
 
   bool validateInputNumber(String min, String max){ 
-
     if(min.isEmpty) {
       minMumNumber.text = "0"; 
     }
@@ -39,14 +44,16 @@ class GenerateController extends GetxController {
     return true;
   }
 
-  void generateNumber(min,max,numberCount){  
+  void generateNumber(min,max,numberCount,allowDupliate){   
     switch (numberCount) {
       case 1:
-        columnResult.value = 1;
-        if (items.isNotEmpty) {
-          items.clear();
-        }
-        items.add((int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min))).toString());
+          columnResult.value = 1;
+          if (items.isNotEmpty) {
+            items.clear();
+          }
+          var rng = (int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min)));
+          items.add(rng.toString());
+          item_histories.add(rng.toString());
         break;
       case 2:
         columnResult.value = 2;
@@ -54,7 +61,9 @@ class GenerateController extends GetxController {
           items.clear();
         } 
         for (var i = 0; i < numberCount; i++) {
-          items.add((int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min))).toString()); 
+          var rng = (int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min)));
+          items.add(rng.toString());
+          item_histories.add(rng.toString()); 
         } 
         break;
       case 3:
@@ -63,7 +72,9 @@ class GenerateController extends GetxController {
           items.clear();
         } 
         for (var i = 0; i < numberCount; i++) {
-          items.add((int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min))).toString()); 
+          var rng = (int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min)));
+          items.add(rng.toString());
+          item_histories.add(rng.toString()); 
         } 
         break;
       default:
@@ -72,10 +83,20 @@ class GenerateController extends GetxController {
           items.clear();
         }
         for (var i = 0; i < numberCount; i++) {
-          items.add((int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min))).toString()); 
+          var rng = (int.parse(min) + Random().nextInt(int.parse(max) - int.parse(min)));
+          items.add(rng.toString());
+          item_histories.add(rng.toString());  
         } 
     } 
   }
 
+  void clearHistory(){
+    item_histories.value = [];
+  }
+  
+  bool copy (value)  { 
+    Clipboard.setData(ClipboardData(text: value )); 
+    return true;
+  }
 
 }

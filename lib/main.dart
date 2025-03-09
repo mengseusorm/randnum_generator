@@ -13,7 +13,7 @@ class RandnumGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp( 
-      home: MainScreen(),
+      home: MainScreen(), 
       debugShowCheckedModeBanner: false,
       title: "Flutter GetX BottomNav",
       theme: ThemeData(
@@ -38,11 +38,12 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(() => screens[navController.selectedIndex.value]),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
+        backgroundColor: Color(0xFFe2b714),
         currentIndex: navController.selectedIndex.value,
         onTap: navController.changePage,
-        selectedItemColor: Colors.blueAccent, 
+        selectedItemColor: Color(0xFF323437), 
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined) ,label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home) ,label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.history),label: 'History')
         ], 
       )),
