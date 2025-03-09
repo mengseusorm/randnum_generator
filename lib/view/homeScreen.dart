@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';   
+import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';   
 import 'package:randnum_generator/controller/generate_controller.dart';
 
 class Homescreen extends StatelessWidget { 
-  final GenerateController generateController = Get.put(GenerateController()); 
+  final GenerateController generateController = Get.put(GenerateController());  
 
   @override
   Widget build(BuildContext context) { 
@@ -25,10 +26,10 @@ class Homescreen extends StatelessWidget {
             children: [ 
               SizedBox(height: 20),
               Text(
-                "Number Count: ${generateController.numberCount.toInt()}",
+                "How many numbers: ${generateController.numberCount.toInt()}",
                 style: TextStyle(color: Color(0xFFd1d0c5)) 
-              ),
-              SizedBox(height: 5,), 
+              ), 
+              SizedBox(height: 10,),
               Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30), 
@@ -42,6 +43,7 @@ class Homescreen extends StatelessWidget {
                         child: CupertinoSlider(
                           activeColor: Color(0xFF323437),
                           value: generateController.numberCount.value,
+                          thumbColor: Color(0xFFd1d0c5),
                           min: 1,
                           max: 10, 
                           divisions: 9,   
@@ -55,7 +57,7 @@ class Homescreen extends StatelessWidget {
                 ),
               ) , 
               SizedBox(height: 20,), 
-              Text("How many number?",style: TextStyle(color: Color(0xFFd1d0c5)),),   
+              Text("Range of numbers",style: TextStyle(color: Color(0xFFd1d0c5)),),   
               SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +106,7 @@ class Homescreen extends StatelessWidget {
                   ),  
                 ],
               ), 
-              SizedBox(height: 10,),  
+              SizedBox(height: 20),
               Text(
                 "Result",
                 style: TextStyle(color: Color(0xFFd1d0c5)),
@@ -145,11 +147,18 @@ class Homescreen extends StatelessWidget {
                 child: Text(
                   "Generate",
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 17
                   ),
                 ),
-              ),)
+              ),),
+              Obx(() => generateController.isAdLoaded.value  ? 
+                Container(
+                    alignment: Alignment.center,
+                    width: generateController.bannerAd.size.width.toDouble(),
+                    height: generateController.bannerAd.size.height.toDouble(),
+                    child: AdWidget(ad: generateController.bannerAd),
+                ) : Container()
+              ), 
             ],
           ),
         ))

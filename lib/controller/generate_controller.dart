@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math'; 
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 class GenerateController extends GetxController { 
 
   RxDouble numberCount = 1.0.obs;
@@ -12,12 +15,27 @@ class GenerateController extends GetxController {
   final items = <String>[].obs;
   RxInt columnResult = 1.obs;  
   final item_histories = <String>[].obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    initBanner();
+  }
+  
+  @override
+  void onClose() {
+    bannerAd.dispose();
+    super.onClose();
+  }
+
   void slider(value){
     numberCount.value = value;
   }
   void currentIndex(index){
     allowDuplicateNumber.value = index; 
   }
+
   void generate(numberCount,allowDuplicate) {
     if(validateInputNumber(minMumNumber.text,maxiMumNumber.text)){ 
       generateNumber(minMumNumber.text,maxiMumNumber.text,numberCount,allowDuplicate); 
@@ -98,5 +116,35 @@ class GenerateController extends GetxController {
     Clipboard.setData(ClipboardData(text: value )); 
     return true;
   }
+  //ad
+  late BannerAd bannerAd;
+  final RxBool isAdLoaded = false.obs;
 
+  void initBanner(){
+    bannerAd = BannerAd(
+      size: AdSize.largeBanner, 
+      adUnitId: "ca-app-pub-1059652645223736/5635260629", 
+      listener: BannerAdListener(
+        onAdLoaded: (ad){
+          print("Ad loaded successfully!");
+          isAdLoaded.value = true;
+          update();
+        },
+        onAdFailedToLoad: (ad,err){
+          print("Failed to load ad: ${err.message}");
+          ad.dispose();
+        },
+        onAdOpened: (ad) => print("Ad opened"),
+        onAdClosed: (ad) => print("Ad closed"),
+        onAdImpression: (ad) => print("Ad impression recorded")
+      ), 
+      request: const AdRequest(),
+    );
+    bannerAd.load();
+  } 
+
+ void reloadAd() {
+    bannerAd.dispose();
+    initBanner();
+  }
 }

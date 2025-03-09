@@ -56,7 +56,7 @@ class Historyscreen extends StatelessWidget {
           }
         ) : Center(
           child: Text(
-            "No Number Generated",
+            "No Numbers Generated",
             style: TextStyle(
               fontSize: 15,
               color: Color(0xFFd1d0c5)

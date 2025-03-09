@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart'; 
 import 'package:randnum_generator/view/historyScreen.dart';
 import 'package:randnum_generator/view/homeScreen.dart';
-import 'controller/navigation_controller.dart';
-void main() {
+import 'controller/navigation_controller.dart'; 
+void main() { 
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(RandnumGenerator());
 }
 
-class RandnumGenerator extends StatelessWidget {
-  const RandnumGenerator({super.key});
+class RandnumGenerator extends StatelessWidget { 
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp( 
       home: MainScreen(), 
-      debugShowCheckedModeBanner: false,
-      title: "Flutter GetX BottomNav",
+      debugShowCheckedModeBanner: false, 
       theme: ThemeData(
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
@@ -26,8 +27,8 @@ class RandnumGenerator extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
-  final NavigationController navController = NavigationController();
-
+  final NavigationController navController = NavigationController(); 
+  
   final List<Widget> screens = [
     Homescreen(),
     Historyscreen()
