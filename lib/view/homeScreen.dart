@@ -15,153 +15,152 @@ class Homescreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold( 
-        backgroundColor: Color(0xFF323437),
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("RandNum Generator",style: TextStyle(color: Colors.white),),
-          backgroundColor: Color(0xFF323437),
+          backgroundColor: Colors.blueAccent,
         ),
-        body: Obx(() =>  Padding(
-          padding: EdgeInsets.all(20),
-          child: ListView( 
-            children: [ 
-              SizedBox(height: 20),
-              Text(
-                "How many numbers: ${generateController.numberCount.toInt()}",
-                style: TextStyle(color: Color(0xFFd1d0c5)) 
-              ), 
-              SizedBox(height: 10,),
-              Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30), 
-                color: Color(0xFFe2b714)
-              ),child:Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [ 
-                      Text("1"),
-                      Expanded( 
-                        child: CupertinoSlider(
-                          activeColor: Color(0xFF323437),
-                          value: generateController.numberCount.value,
-                          thumbColor: Color(0xFFd1d0c5),
-                          min: 1,
-                          max: 10, 
-                          divisions: 9,   
-                          onChanged: (value) => {  
-                            generateController.slider(value)
-                          }), 
+        body: Obx(() => 
+          Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: ListView( 
+                    children: [  
+                      SizedBox(height: 20),
+                      Text(
+                        "How many numbers: ${generateController.numberCount.toInt()}",
+                      ), 
+                      SizedBox(height: 10,),
+                      Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30), 
+                        color: Color(0xFFe8e8e8)
+                      ),child:Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [ 
+                              Text("1"),
+                              Expanded( 
+                                child: CupertinoSlider(
+                                  activeColor: Color(0xFF323437),
+                                  value: generateController.numberCount.value,
+                                  thumbColor: Colors.white,
+                                  min: 1,
+                                  max: 10, 
+                                  divisions: 9,   
+                                  onChanged: (value) => {  
+                                    generateController.slider(value)
+                                  }), 
+                              ),
+                              Text("10")
+                            ],
+                          )
+                        ),
+                      ) , 
+                      SizedBox(height: 20,), 
+                      Text("Range of numbers"),   
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [ 
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),  
+                              ),
+                              controller: generateController.minMumNumber,
+                              textAlign: TextAlign.start, 
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(9) 
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Center(
+                            child: Text(
+                              "TO",
+                            ),
+                          ),
+                          SizedBox(width: 10,), 
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder() 
+                              ),
+                              controller: generateController.maxiMumNumber,
+                              textAlign: TextAlign.start,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(9)
+                              ], 
+                            ),
+                          ),  
+                        ],
+                      ), 
+                      SizedBox(height: 20),
+                      Text(
+                        "Result",
                       ),
-                      Text("10")
+                      GridView.count(
+                        crossAxisCount: generateController.columnResult.value,
+                        childAspectRatio: 2.0, 
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 40,
+                        shrinkWrap: true, // Important to make GridView work inside other scrollable widgets
+                        physics: NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
+                        children: List.generate(generateController.items.length, (index) {
+                          return Center(
+                            child: Text(
+                              generateController.items[index],
+                              style: TextStyle(
+                                fontSize: 
+                                  generateController.columnResult.value == 1 ? 70 : 
+                                  generateController.columnResult.value == 2 ? 33 :
+                                  generateController.columnResult.value == 3 ? 20 : 20
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 15),  
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(  
+                        onPressed: () => { 
+                          generateController.generate(generateController.numberCount.toInt(),generateController.allowDuplicateNumber.value)
+                        },  
+                        style: ElevatedButton.styleFrom( 
+                          backgroundColor: Colors.blueAccent,   
+                        ),
+                        child: Text(
+                          "Generate",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.white
+                          ),
+                        ),
+                      ),), 
                     ],
-                  )
-                ),
-              ) , 
-              SizedBox(height: 20,), 
-              Text("Range of numbers",style: TextStyle(color: Color(0xFFd1d0c5)),),   
-              SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [ 
-                  Expanded(
-                    child: TextField(
-                      style: TextStyle(color: Color(0xFFd1d0c5)), 
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),  
-                      ),
-                      controller: generateController.minMumNumber,
-                      textAlign: TextAlign.start, 
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(9) 
-                      ],
-                    ),
                   ),
-                  SizedBox(width: 10,),
-                  Center(
-                    child: Text(
-                      "TO",
-                      style: TextStyle(
-                        color: Color(0xFFd1d0c5)
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10,), 
-                  Expanded(
-                    child: TextField(
-                      style: TextStyle(color: Color(0xFFd1d0c5)),
-                      decoration: InputDecoration(
-                        // labelText: "Maximum Number",
-                        labelStyle: TextStyle(color: Color(0xFFd1d0c5)),
-                        border: OutlineInputBorder() 
-                      ),
-                      controller: generateController.maxiMumNumber,
-                      textAlign: TextAlign.start,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(9)
-                      ], 
-                    ),
-                  ),  
-                ],
-              ), 
-              SizedBox(height: 20),
-              Text(
-                "Result",
-                style: TextStyle(color: Color(0xFFd1d0c5)),
+                )
               ),
-              GridView.count(
-                crossAxisCount: generateController.columnResult.value,
-                childAspectRatio: 2.0, 
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 40,
-                shrinkWrap: true, // Important to make GridView work inside other scrollable widgets
-                physics: NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
-                children: List.generate(generateController.items.length, (index) {
-                  return Center(
-                    child: Text(
-                      generateController.items[index],
-                      style: TextStyle(
-                        color: Color(0xFFd1d0c5),
-                        fontSize: 
-                          generateController.columnResult.value == 1 ? 70 : 
-                          generateController.columnResult.value == 2 ? 33 :
-                          generateController.columnResult.value == 3 ? 20 : 20
-                      ),
-                    ),
-                  );
-                }),
-              ),
-              SizedBox(height: 15),  
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(  
-                onPressed: () => { 
-                  generateController.generate(generateController.numberCount.toInt(),generateController.allowDuplicateNumber.value)
-                },  
-                style: ElevatedButton.styleFrom( 
-                  backgroundColor: Color(0xFFe2b714),   
-                ),
-                child: Text(
-                  "Generate",
-                  style: TextStyle(
-                    fontSize: 17
-                  ),
-                ),
-              ),),
-              Obx(() => generateController.isAdLoaded.value  ? 
-                Container(
-                    alignment: Alignment.center,
-                    width: generateController.bannerAd.size.width.toDouble(),
-                    height: generateController.bannerAd.size.height.toDouble(),
-                    child: AdWidget(ad: generateController.bannerAd),
-                ) : Container(child: Text("helo"),)
-              ), 
-            ],
-          ),
-        ))
-      ));
+               Obx(() => generateController.isAdLoaded.value  ? 
+                  Container(
+                      alignment: Alignment.center,
+                      width: generateController.bannerAd.size.width.toDouble(),
+                      height: generateController.bannerAd.size.height.toDouble(),
+                      child: AdWidget(ad: generateController.bannerAd),
+                  ) : Container(),
+                ),   
+              ]
+            ),
+        )
+    ));
   }
 }

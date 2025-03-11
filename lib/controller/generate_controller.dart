@@ -18,7 +18,6 @@ class GenerateController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     initBanner();
   }
@@ -122,17 +121,16 @@ class GenerateController extends GetxController {
 
   void initBanner(){
     bannerAd = BannerAd(
-      size: AdSize.banner, 
+      size: AdSize.fullBanner, 
       adUnitId: "ca-app-pub-1059652645223736/5635260629", 
       listener: BannerAdListener(
-        onAdLoaded: (ad){
-          print("Ad loaded successfully!");
+        onAdLoaded: (ad){ 
           isAdLoaded.value = true;
           update();
         },
         onAdFailedToLoad: (ad,err){
-          print("Failed to load ad: ${err.message}");
           ad.dispose();
+          print("error$err");
         },
         onAdOpened: (ad) => print("Ad opened"),
         onAdClosed: (ad) => print("Ad closed"),

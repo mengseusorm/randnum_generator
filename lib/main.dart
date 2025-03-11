@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart'; 
 import 'package:randnum_generator/view/historyScreen.dart';
 import 'package:randnum_generator/view/homeScreen.dart';
 import 'controller/navigation_controller.dart'; 
-void main() { 
-  WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+void main() async {  
+  WidgetsFlutterBinding.ensureInitialized(); 
+  unawaited(MobileAds.instance.initialize());
   runApp(RandnumGenerator());
 }
 
@@ -39,10 +41,10 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(() => screens[navController.selectedIndex.value]),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
-        backgroundColor: Color(0xFFe2b714),
+        backgroundColor: Colors.blueAccent,
         currentIndex: navController.selectedIndex.value,
         onTap: navController.changePage,
-        selectedItemColor: Color(0xFF323437), 
+        selectedItemColor: Colors.white, 
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home) ,label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.history),label: 'History')
