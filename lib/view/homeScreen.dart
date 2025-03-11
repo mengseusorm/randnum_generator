@@ -157,7 +157,7 @@ class Homescreen extends StatelessWidget {
                     width: generateController.bannerAd.size.width.toDouble(),
                     height: generateController.bannerAd.size.height.toDouble(),
                     child: AdWidget(ad: generateController.bannerAd),
-                ) : Container()
+                ) : Container(child: Text("helo"),)
               ), 
             ],
           ),

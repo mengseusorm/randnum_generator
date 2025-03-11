@@ -122,7 +122,7 @@ class GenerateController extends GetxController {
 
   void initBanner(){
     bannerAd = BannerAd(
-      size: AdSize.largeBanner, 
+      size: AdSize.banner, 
       adUnitId: "ca-app-pub-1059652645223736/5635260629", 
       listener: BannerAdListener(
         onAdLoaded: (ad){
