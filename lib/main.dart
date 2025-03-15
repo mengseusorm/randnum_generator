@@ -41,10 +41,10 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(() => screens[navController.selectedIndex.value]),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
         currentIndex: navController.selectedIndex.value,
         onTap: navController.changePage,
-        selectedItemColor: Colors.white, 
+        selectedItemColor: Colors.blue, 
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home) ,label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.history),label: 'History')

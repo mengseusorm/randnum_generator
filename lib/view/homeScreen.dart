@@ -15,15 +15,15 @@ class Homescreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold( 
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         appBar: AppBar(
           title: Text("RandNum Generator",style: TextStyle(color: Colors.white),),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.blue,
         ),
         body: Obx(() => 
           Column(
             children: [
-              Expanded(
+              Expanded(  
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: ListView( 
@@ -31,12 +31,15 @@ class Homescreen extends StatelessWidget {
                       SizedBox(height: 20),
                       Text(
                         "How many numbers: ${generateController.numberCount.toInt()}",
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
                       ), 
                       SizedBox(height: 10,),
                       Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30), 
-                        color: Color(0xFFe8e8e8)
+                        color: Colors.white
                       ),child:Padding(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: Row(
@@ -44,7 +47,7 @@ class Homescreen extends StatelessWidget {
                               Text("1"),
                               Expanded( 
                                 child: CupertinoSlider(
-                                  activeColor: Color(0xFF323437),
+                                  activeColor: Colors.blue,
                                   value: generateController.numberCount.value,
                                   thumbColor: Colors.white,
                                   min: 1,
@@ -60,52 +63,93 @@ class Homescreen extends StatelessWidget {
                         ),
                       ) , 
                       SizedBox(height: 20,), 
-                      Text("Range of numbers"),   
+                      Text(
+                        "Range of numbers",
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
+                      ),   
                       SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [ 
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),  
+                        children: [  
+                          Expanded( 
+                            child: Card( 
+                              margin: EdgeInsets.zero,
+                              color: Colors.white,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(  
+                                  controller: generateController.minMumNumber,
+                                  decoration: InputDecoration(
+                                     border: InputBorder.none, 
+                                  ),
+                                  textAlign: TextAlign.center, 
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(9) 
+                                  ],
+                                  style: TextStyle(
+                                    fontSize: 20, 
+                                  ), 
+                                ), 
                               ),
-                              controller: generateController.minMumNumber,
-                              textAlign: TextAlign.start, 
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(9) 
-                              ],
                             ),
                           ),
                           SizedBox(width: 10,),
                           Center(
-                            child: Text(
-                              "TO",
+                            child: Card( 
+                              color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30), // Add border radius
+                                ),
+                              child: Padding(
+                                padding: EdgeInsets.all(10), 
+                                child: Text(
+                                  "TO",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(width: 10,), 
                           Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder() 
+                              child: Card( 
+                              margin: EdgeInsets.zero,
+                              color: Colors.white,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none 
+                                  ),
+                                  controller: generateController.maxiMumNumber,
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(9)
+                                  ], 
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ), 
+                                ), 
                               ),
-                              controller: generateController.maxiMumNumber,
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(9)
-                              ], 
-                            ),
-                          ),  
+                            )
+                          ), 
                         ],
                       ), 
                       SizedBox(height: 20),
                       Text(
                         "Result",
-                      ),
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
+                      ), 
                       GridView.count(
                         crossAxisCount: generateController.columnResult.value,
                         childAspectRatio: 2.0, 
@@ -121,7 +165,8 @@ class Homescreen extends StatelessWidget {
                                 fontSize: 
                                   generateController.columnResult.value == 1 ? 70 : 
                                   generateController.columnResult.value == 2 ? 33 :
-                                  generateController.columnResult.value == 3 ? 20 : 20
+                                  generateController.columnResult.value == 3 ? 20 : 20,
+                                color:Colors.white 
                               ),
                             ),
                           );
@@ -136,13 +181,13 @@ class Homescreen extends StatelessWidget {
                           generateController.generate(generateController.numberCount.toInt(),generateController.allowDuplicateNumber.value)
                         },  
                         style: ElevatedButton.styleFrom( 
-                          backgroundColor: Colors.blueAccent,   
+                          backgroundColor: Colors.white,   
                         ),
                         child: Text(
                           "Generate",
                           style: TextStyle(
                             fontSize: 17,
-                            color: Colors.white
+                            color: Colors.blue
                           ),
                         ),
                       ),), 
